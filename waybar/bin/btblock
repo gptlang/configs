@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Get the current Bluetooth power status
+status=$(bluetoothctl show | grep "Powered:" | awk '{print $2}')
+
+# Toggle the Bluetooth power status
+if [ "$status" == "yes" ]; then
+    echo "Turning Bluetooth off..."
+    bluetoothctl power off
+else
+    echo "Turning Bluetooth on..."
+    bluetoothctl power on
+fi
+
