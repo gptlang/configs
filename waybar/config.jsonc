@@ -67,9 +67,9 @@
 		"device": "intel_backlight",
 		"format": "{icon} {percent}%",
 		"format-icons": [
-			"",
-			"",
-			""
+			"🌕",
+			"🌄",
+			"🔆"
 		]
 	},
 	"battery": {
@@ -153,11 +153,9 @@
 		"tooltip-format": "{used} used out of {total} on {path} "
 	},
 	"custom/notifications": {
-		"format": "<b>{}</b> ",
-		"exec": "~/.config/waybar/bin/not-dnd -j",
-		"on-click": "~/.config/waybar/bin/not-dnd",
-		"return-type": "json",
-		"interval": "once",
-		"signal": 2
+		"format": "🕭 {}",
+		"exec": "swaync-client -c",
+		"on-click": "swaync-client -op",
+		"interval": 2,
 	}
 }
