@@ -39,7 +39,7 @@
 		"sort-by-name": true,
 		"format": "{id}",
 		"show-special": true,
-		"persistent_workspaces": {
+		"persistent-workspaces": {
 			"*": 0
 		}
 	},
@@ -49,7 +49,7 @@
 	},
 	"clock": {
 		"interval": 60,
-		"format": "⏲ {:%A, %B %d (%I:%M %p)}",
+		"format": "{:%a, %b %d (%I:%M %p)}",
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
 			"mode": "year",
@@ -130,6 +130,7 @@
 	"network": {
 		"format-disconnected": "Disconnected",
 		"format-wifi": " {essid}",
+		"max-length": 10,
 		"tooltip-format": " {signalStrength}",
 		"on-click": "wifimenu"
 	},
@@ -168,7 +169,7 @@
     "return-type": "json",
     "exec-if": "which swaync-client",
     "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
+    "on-click": "sleep 0.2 && swaync-client -t -sw",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },
