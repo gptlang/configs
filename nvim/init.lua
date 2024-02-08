@@ -149,10 +149,6 @@ require('lazy').setup({
 	{
 		-- Theme inspired by Atom
 		'navarasu/onedark.nvim',
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme 'onedark'
-		end,
 	},
 
 	{
@@ -256,8 +252,6 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Keep signcolumn on by default
--- vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -643,4 +637,7 @@ require("copilot").setup({
 	},
 })
 require('Comment').setup()
+require('onedark').load()
 vim.cmd('highlight Normal ctermbg=NONE guibg=NONE')
+vim.cmd('highlight EndOfBuffer ctermbg=NONE guibg=NONE')
+vim.wo.signcolumn = 'no'
