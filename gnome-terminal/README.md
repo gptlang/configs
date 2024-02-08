@@ -2,8 +2,8 @@
 
 ```bash
 # Saving your config
-$ dconf dump /org/gnome/terminal/legacy/profiles:/ > gnome-terminal-profiles.dconf
+$ dconf dump /org/gnome/terminal/legacy/profiles:/ > profile.dconf
 
 # Loading the config
-$ dconf load /org/gnome/terminal/legacy/profiles:/ < gnome-terminal-profiles.dconf
+$ dconf load /org/gnome/terminal/legacy/profiles:/ < profile.dconf
 ```
