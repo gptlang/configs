@@ -36,6 +36,7 @@ require('lazy').setup({
 		"gptlang/CopilotChat.nvim",
 		opts = {
 			mode = "split", -- newbuffer or split  , default: newbuffer
+			-- proxy = "http://localhost:3000"
 		},
 		build = function()
 			vim.defer_fn(function()

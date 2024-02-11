@@ -139,7 +139,7 @@
 		"format-disabled": " {status}",
 		"format-connected": " {num_connections}",
 		"tooltip-format": "{device_alias}",
-		"format-connected-battery": " {device_battery_percentage}%",
+		"format-connected-battery": " {device_battery_percentage}%",
 		"tooltip-format-enumerate-connected": "{device_alias}",
 		"on-click": "btblock",
 		"max-length": 10,
