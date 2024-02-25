@@ -20,13 +20,13 @@
 		"hyprland/workspaces",
 		"backlight",
 		"bluetooth",
-		"custom/notifications"
+		"custom/notifications",
+		"tray",
 	],
 	"modules-center": [
 		"clock"
 	],
 	"modules-right": [
-		"tray",
 		"network",
 		"pulseaudio",
 		"pulseaudio#microphone",

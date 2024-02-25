@@ -1,7 +1,7 @@
 
 [
   {
-  "output": [ "eDP-1", "DP-4" ],
+  "output": [ "eDP-1", "DP-3" ],
     "include": [
       "~/.config/waybar/config.jsonc",
     ],
