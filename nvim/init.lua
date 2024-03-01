@@ -33,7 +33,8 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
 	{
-		"gptlang/CopilotChat.nvim",
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "tiktoken",
 		opts = {
 			mode = "split", -- newbuffer or split  , default: newbuffer
 			-- proxy = "http://localhost:3000"
