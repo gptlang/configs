@@ -2,9 +2,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.wo.relativenumber = true
 -- Show tabs as 2 characters
-vim.opt.tabstop = 3
-vim.opt.softtabstop = 3
-vim.opt.shiftwidth = 3
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.o.noexpandtab = true
 vim.opt.mouse = ""
 -- Install package manager
@@ -34,22 +34,17 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "tiktoken",
+		branch = "canary",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" },     -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" },      -- for curl, log wrapper
+			{ "nvim-telescope/telescope.nvim" }, -- for telescope help actions (optional)
+		},
 		opts = {
-			mode = "split", -- newbuffer or split  , default: newbuffer
-			-- proxy = "http://localhost:3000"
+			debug = true, -- Enable debugging
+			-- See Configuration section for rest
 		},
-		build = function()
-			vim.defer_fn(function()
-				vim.cmd("UpdateRemotePlugins")
-				vim.notify("CopilotChat - Updated remote plugins. Please restart Neovim.")
-			end, 3000)
-		end,
-		event = "VeryLazy",
-		keys = {
-			{ "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-			{ "<leader>cct", "<cmd>CopilotChatTests<cr>",   desc = "CopilotChat - Generate tests" },
-		},
+		-- See Commands section for default commands if you want to lazy load on them
 	},
 	-- NOTE: First, some plugins that don't require any configuration
 	'zbirenbaum/copilot.lua',
@@ -60,6 +55,7 @@ require('lazy').setup({
 		-- Uncomment next line if you want to follow only stable versions
 		-- version = "*"
 	},
+	'kkoomen/vim-doge',
 	'nvim-treesitter/playground',
 	-- Git related plugins
 	'tpope/vim-fugitive',
@@ -122,7 +118,8 @@ require('lazy').setup({
 				changedelete = { text = '~' },
 			},
 			on_attach = function(bufnr)
-				vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+				vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk,
+					{ buffer = bufnr, desc = 'Preview git hunk' })
 
 				-- don't override the built-in and fugitive keymaps
 				local gs = package.loaded.gitsigns
@@ -210,20 +207,6 @@ require('lazy').setup({
 		build = ':TSUpdate',
 	},
 
-	-- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-	--       These are some example plugins that I've included in the kickstart repository.
-	--       Uncomment any of the lines below to enable them.
-	-- require 'kickstart.plugins.autoformat',
-	-- require 'keybinds',
-	-- require 'kickstart.plugins.debug',
-
-	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-	--    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-	--    up-to-date with whatever is in the kickstart repo.
-	--    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	--
-	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-	-- { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
