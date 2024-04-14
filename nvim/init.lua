@@ -5,7 +5,7 @@ vim.wo.relativenumber = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
-vim.o.noexpandtab = true
+-- vim.o.noexpandtab = true
 vim.opt.mouse = ""
 -- Install package manager
 
@@ -42,6 +42,7 @@ require('lazy').setup({
 		},
 		opts = {
 			debug = true, -- Enable debugging
+			-- history_path = "/tmp/copilot-chat/history/",
 			-- See Configuration section for rest
 		},
 		-- See Commands section for default commands if you want to lazy load on them
@@ -365,10 +366,10 @@ vim.defer_fn(function()
 		incremental_selection = {
 			enable = true,
 			keymaps = {
-				init_selection = '<c-space>',
-				node_incremental = '<c-space>',
+				init_selection = '<c-a>',
+				node_incremental = '<c-a>',
 				scope_incremental = '<c-s>',
-				node_decremental = '<M-space>',
+				node_decremental = '<c-d>',
 			},
 		},
 		textobjects = {
