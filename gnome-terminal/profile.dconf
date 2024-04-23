@@ -1,7 +1,7 @@
 [:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
 audible-bell=true
-background-color='rgb(0,8,73)'
-background-transparency-percent=31
+background-color='rgb(29,10,128)'
+background-transparency-percent=48
 bold-is-bright=false
 cursor-background-color='rgb(255,0,0)'
 cursor-colors-set=true

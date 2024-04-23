@@ -36,8 +36,8 @@ require("lazy").setup({
 		"CopilotC-Nvim/CopilotChat.nvim",
 		branch = "canary",
 		dependencies = {
-			{ "zbirenbaum/copilot.lua" },     -- or github/copilot.vim
-			{ "nvim-lua/plenary.nvim" },      -- for curl, log wrapper
+			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 			{ "nvim-telescope/telescope.nvim" }, -- for telescope help actions (optional)
 		},
 		opts = {
@@ -60,6 +60,7 @@ require("lazy").setup({
 		-- Uncomment next line if you want to follow only stable versions
 		-- version = "*"
 	},
+	"mfussenegger/nvim-lint",
 	"kkoomen/vim-doge",
 	"nvim-treesitter/playground",
 	-- Git related plugins
@@ -90,7 +91,7 @@ require("lazy").setup({
 	{ "nvim-lua/plenary.nvim" },
 	-- Useful status updates for LSP
 	-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-	{ "j-hui/fidget.nvim",              opts = {} },
+	{ "j-hui/fidget.nvim", opts = {} },
 
 	{
 		-- Autocompletion
@@ -653,9 +654,15 @@ require("conform").setup({
 		python = { "isort", "black" },
 		-- Use a sub-list to run only the first available formatter
 		javascript = { { "prettier" } },
-		sql = {
-			"sql_formatter",
-		},
+		-- sql = {
+		-- 	"sql_formatter",
+		-- },
+		java = { "google-java-format" },
+	},
+	format_on_save = {
+		-- These options will be passed to conform.format()
+		timeout_ms = 500,
+		lsp_fallback = true,
 	},
 })
 local conform = require("conform")
@@ -668,3 +675,18 @@ conform.formatters.sql_formatter = {
 vim.keymap.set("n", "<space>F", function()
 	require("conform").format()
 end)
+
+require("lint").linters_by_ft = {
+	java = { "checkstyle" },
+}
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	callback = function()
+		-- try_lint without arguments runs the linters defined in `linters_by_ft`
+		-- for the current filetype
+		require("lint").try_lint()
+
+		-- You can call `try_lint` with a linter name or a list of names to always
+		-- run specific linters, independent of the `linters_by_ft` configuration
+		-- require("lint").try_lint("cspell")
+	end,
+})
