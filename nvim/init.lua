@@ -234,7 +234,7 @@ vim.o.mouse = "a"
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = "unnamedplus"
+-- vim.o.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -630,12 +630,12 @@ require("copilot").setup({
 	},
 	suggestion = {
 		enabled = true,
-		auto_trigger = true,
+		auto_trigger = false,
 		debounce = 75,
 		keymap = {
 			accept = "<M-l>",
-			accept_word = false,
-			accept_line = false,
+			accept_word = "<M-;>",
+			accept_line = "<M-k>",
 			next = "<M-]>",
 			prev = "<M-[>",
 			dismiss = "<C-]>",
@@ -658,6 +658,7 @@ require("conform").setup({
 		-- 	"sql_formatter",
 		-- },
 		java = { "google-java-format" },
+		go = { "gofumpt" },
 	},
 	format_on_save = {
 		-- These options will be passed to conform.format()
@@ -690,3 +691,6 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		-- require("lint").try_lint("cspell")
 	end,
 })
+
+vim.api.nvim_set_keymap("v", "<C-S-s>", '"+y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("s", "<C-S-s>", '"+y', { noremap = true, silent = true })
