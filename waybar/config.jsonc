@@ -49,7 +49,7 @@
 	},
 	"clock": {
 		"interval": 60,
-		"format": "{:%a, %b %d (%I:%M %p)}",
+		"format": "{:%a, %m月%d日 (%I:%M %p)}",
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
 			"mode": "year",
