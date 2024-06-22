@@ -55,11 +55,11 @@ require("lazy").setup({
 	},
 	{
 		"danymat/neogen",
-		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = true,
 		-- Uncomment next line if you want to follow only stable versions
 		-- version = "*"
 	},
+	"nvim-treesitter/nvim-treesitter",
 	"mfussenegger/nvim-lint",
 	"kkoomen/vim-doge",
 	"nvim-treesitter/playground",
@@ -520,7 +520,7 @@ require("mason-lspconfig").setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-	-- clangd = {},
+	clangd = { filetypes = { "c", "cpp", "objcpp", "cuda" } },
 	-- gopls = {},
 	-- pyright = {},
 	-- rust_analyzer = {},
@@ -531,16 +531,6 @@ local servers = {
 		Lua = {
 			workspace = { checkThirdParty = false },
 			telemetry = { enable = false },
-		},
-	},
-	pylsp = {
-		pylsp = {
-			plugins = {
-				pycodestyle = {
-					ignore = { "W391", "W503" },
-					maxLineLength = 100,
-				},
-			},
 		},
 	},
 }
@@ -659,6 +649,7 @@ require("conform").setup({
 		-- },
 		java = { "google-java-format" },
 		go = { "gofumpt" },
+		protobuf = { "buf" },
 	},
 	format_on_save = {
 		-- These options will be passed to conform.format()
@@ -679,6 +670,8 @@ end)
 
 require("lint").linters_by_ft = {
 	java = { "checkstyle" },
+	protobuf = { "buf", "buf_lint" },
+	go = { "golangcilint" },
 }
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	callback = function()
