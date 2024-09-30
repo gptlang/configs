@@ -6,7 +6,6 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 -- vim.o.noexpandtab = true
-vim.opt.mouse = ""
 -- Install package manager
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -33,6 +32,28 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require("lazy").setup({
 	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("go").setup()
+		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+	},
+	{
+		"jiaoshijie/undotree",
+		dependencies = "nvim-lua/plenary.nvim",
+		config = true,
+		keys = { -- load the plugin only when using it's keybinding:
+			{ "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
+		},
+	},
+	{
 		"CopilotC-Nvim/CopilotChat.nvim",
 		branch = "canary",
 		dependencies = {
@@ -40,8 +61,16 @@ require("lazy").setup({
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 			{ "nvim-telescope/telescope.nvim" }, -- for telescope help actions (optional)
 		},
+		build = "make tiktoken",
 		opts = {
+			prompts = {
+				MyCustomPiratePrompt = {
+					system_prompt = [[You are fascinated by pirates, so please respond in pirate speak.]],
+					prompt = "what is a sorting algo?",
+				},
+			},
 			debug = false, -- Enable debugging
+			model = "gpt-4o",
 			-- history_path = "/tmp/copilot-chat/history/",
 			-- See Configuration section for rest
 		},
@@ -86,7 +115,7 @@ require("lazy").setup({
 		},
 	},
 	-- Formatting
-	{ "jose-elias-alvarez/null-ls.nvim" },
+	{ "nvimtools/none-ls.nvim" },
 	{ "MunifTanjim/prettier.nvim" },
 	{ "nvim-lua/plenary.nvim" },
 	-- Useful status updates for LSP
@@ -496,16 +525,22 @@ local on_attach = function(_, bufnr)
 end
 
 -- document existing key chains
-require("which-key").register({
-	["<leader>c"] = { name = "[C]ode", _ = "which_key_ignore" },
-	["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
-	["<leader>g"] = { name = "[G]it", _ = "which_key_ignore" },
-	["<leader>h"] = { name = "More git", _ = "which_key_ignore" },
-	["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
-	["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
-	["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+require("which-key").add({
+	{ "<leader>c", group = "[C]ode" },
+	{ "<leader>c_", hidden = true },
+	{ "<leader>d", group = "[D]ocument" },
+	{ "<leader>d_", hidden = true },
+	{ "<leader>g", group = "[G]it" },
+	{ "<leader>g_", hidden = true },
+	{ "<leader>h", group = "More git" },
+	{ "<leader>h_", hidden = true },
+	{ "<leader>r", group = "[R]ename" },
+	{ "<leader>r_", hidden = true },
+	{ "<leader>s", group = "[S]earch" },
+	{ "<leader>s_", hidden = true },
+	{ "<leader>w", group = "[W]orkspace" },
+	{ "<leader>w_", hidden = true },
 })
-
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
 require("mason").setup()
@@ -643,17 +678,18 @@ require("conform").setup({
 		-- Conform will run multiple formatters sequentially
 		python = { "isort", "black" },
 		-- Use a sub-list to run only the first available formatter
-		javascript = { { "prettier" } },
 		-- sql = {
 		-- 	"sql_formatter",
 		-- },
 		java = { "google-java-format" },
 		go = { "gofumpt" },
 		protobuf = { "buf" },
+		javascript = { "biome", "prettier" },
+		html = { "prettier" },
 	},
 	format_on_save = {
 		-- These options will be passed to conform.format()
-		timeout_ms = 500,
+		timeout_ms = 5000,
 		lsp_fallback = true,
 	},
 })
@@ -687,3 +723,15 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 
 vim.api.nvim_set_keymap("v", "<C-S-s>", '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("s", "<C-S-s>", '"+y', { noremap = true, silent = true })
+require("go").setup({
+	lsp_cfg = {
+		settings = {
+			gopls = {
+				hints = {
+					parameterNames = true,
+					-- ... other settings from doc/inlayHints.md ...
+				},
+			},
+		},
+	},
+})
