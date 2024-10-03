@@ -755,6 +755,6 @@ require("go").setup({
 })
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
-map("n", "<C-tab>", "<Cmd>BufferPrevious<CR>", opts)
-map("n", "<C-S-tab>", "<Cmd>BufferNext<CR>", opts)
+map("n", "<C-S-tab>", "<Cmd>BufferPrevious<CR>", opts)
+map("n", "<C-tab>", "<Cmd>BufferNext<CR>", opts)
 map("n", "<C-S-w>", "<Cmd>BufferClose<CR>", opts)
