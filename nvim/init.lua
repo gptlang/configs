@@ -76,6 +76,23 @@ require("lazy").setup({
 		},
 		-- See Commands section for default commands if you want to lazy load on them
 	},
+	{
+		"romgrk/barbar.nvim",
+		dependencies = {
+			"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+			"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+		},
+		init = function()
+			vim.g.barbar_auto_setup = false
+		end,
+		opts = {
+			-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+			-- animation = true,
+			-- insert_at_start = true,
+			-- …etc.
+		},
+		version = "^1.0.0", -- optional: only update when a new 1.x version is released
+	},
 	-- NOTE: First, some plugins that don't require any configuration
 	"zbirenbaum/copilot.lua",
 	{
@@ -655,7 +672,7 @@ require("copilot").setup({
 	},
 	suggestion = {
 		enabled = true,
-		auto_trigger = false,
+		auto_trigger = true,
 		debounce = 75,
 		keymap = {
 			accept = "<M-l>",
@@ -685,6 +702,7 @@ require("conform").setup({
 		go = { "gofumpt" },
 		protobuf = { "buf" },
 		javascript = { "biome", "prettier" },
+		typescript = { "biome", "prettier" },
 		html = { "prettier" },
 	},
 	format_on_save = {
@@ -735,3 +753,8 @@ require("go").setup({
 		},
 	},
 })
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+map("n", "<C-tab>", "<Cmd>BufferPrevious<CR>", opts)
+map("n", "<C-S-tab>", "<Cmd>BufferNext<CR>", opts)
+map("n", "<C-S-w>", "<Cmd>BufferClose<CR>", opts)
